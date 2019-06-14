@@ -1,6 +1,6 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
-RUN apk add --no-cache rsync rrsync openssh-server
+RUN apk add --no-cache openssh-server
 
 ENV SSHD_HOST_KEYS_DIR /etc/ssh/host_keys
 VOLUME $SSHD_HOST_KEYS_DIR

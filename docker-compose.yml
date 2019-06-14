@@ -1,0 +1,18 @@
+version: '2'
+
+volumes:
+  host_keys:
+
+services:
+  ssh_bastion:
+    build: .
+    image: fphammerle/ssh-bastion
+    environment:
+      USERS: alice,bob
+    volumes:
+    - host_keys:/etc/ssh/host_keys:rw
+    ports:
+    - '0.0.0.0:2222:22'
+    restart: unless-stopped
+
+# https://docs.docker.com/compose/compose-file/compose-file-v2/

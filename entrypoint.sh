@@ -14,6 +14,7 @@ IFS=','
 for USER in $USERS; do
     if ! id "$USER" 2>/dev/null >/dev/null ; then
         (set -x; adduser -D "$USER")
+        # TODO remove:
         passwd -u "$USER" 2>/dev/null
     fi
 done

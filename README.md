@@ -1,31 +1,34 @@
-# docker: openssh-server restricted to rsync 🐳
+# Docker: OpenSSH-Server Restricted to TCP Forwarding 🐳
 
-repo: https://github.com/fphammerle/docker-rsync-sshd
+Docker Hub: https://hub.docker.com/r/fphammerle/ssh-bastion
 
-docker hub: https://hub.docker.com/r/fphammerle/rsync-sshd
-
-SSH clients are restricted to `rsync --server` commands via [rrsync](https://download.samba.org/pub/unpacked/rsync/support/rrsync).
-
-rrsync prefixes `/data` to all paths (e.g., `rsync ... host:/src /backup` downloads `/data/src`).
-
-## example 1
+## Example: Share Web Server
 
 ```sh
-$ docker run --name=rsync-sshd -p 2022:22 -e USERS=alice,bob -v rsync-data:/data:ro fphammerle/rsync-sshd
-$ docker cp alice-keys rsync-sshd:/home/alice/.ssh/authorized_keys
-$ docker cp bob-keys rsync-sshd:/home/bob/.ssh/authorized_keys
+bastion $ docker run --name ssh-bastion -p 2222:22 -e USERS=alice,bob fphammerle/ssh-bastion
+bastion $ docker cp alice-keys ssh-bastion:/home/alice/.ssh/authorized_keys
+bastion $ docker cp bob-keys ssh-bastion:/home/bob/.ssh/authorized_keys
+alice $ ssh -N -R 28080:localhost:8080 -p 2222 bastion
+bob $ ssh -N -L 8081:localhost:28080 -p 2222 bastion
+bob $ curl http://localhost:8081/hello_bob.html
 ```
 
-## example 2
+## Example: SSH Jump Host
 
 ```
-$ docker run --name rsync-sshd \
+$ docker run --name ssh-bastion \
     --publish 2022:22 --env USERS=alice,bob \
-    --volume accessible-data:/data:ro \
-    --volume host-keys:/etc/ssh/host_keys \
-    --volume alice-ssh-config:/home/alice/.ssh:ro \ 
-    --volume bob-ssh-config:/home/bob/.ssh:ro \ 
+    --volume bastion-host-keys:/etc/ssh/host_keys \
+    --volume alice-ssh-config:/home/alice/.ssh:ro \
+    --volume bob-ssh-config:/home/bob/.ssh:ro \
     --init --rm \
-    fphammerle/rsync-sshd
-$ rsync -av --rsh='ssh -p 2022' alice@localhost:/source /target
+    fphammerle/ssh-bastion
+$ ssh -N -R 20221:localhost:22 -p 2022 alice@bastion
+$ ssh -J bob@bastion:2022 -p 20221 localhost
 ```
+
+### Docker Compose 🐙
+
+1. `git clone https://github.com/fphammerle/docker-ssh-bastion`
+2. Adapt `$USERS` and paths in [docker-compose.yml](docker-compose.yml)
+3. `docker-compose up`
