@@ -17,14 +17,14 @@ bob $ curl http://localhost:8081/hello_bob.html
 
 ```
 $ docker run --name ssh-bastion \
-    --publish 2022:22 --env USERS=alice,bob \
+    --publish 2222:22 --env USERS=alice,bob \
     --volume bastion-host-keys:/etc/ssh/host_keys \
     --volume alice-ssh-config:/home/alice/.ssh:ro \
     --volume bob-ssh-config:/home/bob/.ssh:ro \
     --init --rm \
     fphammerle/ssh-bastion
-$ ssh -N -R 20221:localhost:22 -p 2022 alice@bastion
-$ ssh -J bob@bastion:2022 -p 20221 localhost
+$ ssh -N -R 22221:localhost:22 -p 2222 alice@bastion
+$ ssh -J bob@bastion:2222 -p 22221 localhost
 ```
 
 ### Docker Compose 🐙
