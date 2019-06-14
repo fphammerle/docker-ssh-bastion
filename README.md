@@ -30,5 +30,5 @@ $ ssh -J bob@bastion:2022 -p 20221 localhost
 ### Docker Compose 🐙
 
 1. `git clone https://github.com/fphammerle/docker-ssh-bastion`
-2. Adapt `$USERS` and paths in [docker-compose.yml](docker-compose.yml)
+2. Adapt `$USERS` and volumes in [docker-compose.yml](docker-compose.yml)
 3. `docker-compose up`

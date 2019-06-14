@@ -2,6 +2,8 @@ version: '2'
 
 volumes:
   host_keys:
+  config_alice:
+  config_bob:
 
 services:
   ssh_bastion:
@@ -11,6 +13,8 @@ services:
       USERS: alice,bob
     volumes:
     - host_keys:/etc/ssh/host_keys:rw
+    - config_alice:/home/alice/.ssh:ro
+    - config_bob:/home/bob/.ssh:ro
     ports:
     - '0.0.0.0:2222:22'
     restart: unless-stopped
