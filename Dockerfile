@@ -1,4 +1,4 @@
-FROM alpine:3.12.2
+FROM alpine:3.12.3
 
 ARG OPENSSH_SERVER_PACKAGE_VERSION=8.3_p1-r0
 RUN apk add --no-cache openssh-server=$OPENSSH_SERVER_PACKAGE_VERSION
