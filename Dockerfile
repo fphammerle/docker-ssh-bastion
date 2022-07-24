@@ -1,6 +1,6 @@
 FROM docker.io/alpine:3.16.1
   
-ARG OPENSSH_SERVER_PACKAGE_VERSION=8.8_p1-r1
+ARG OPENSSH_SERVER_PACKAGE_VERSION=9.0_p1-r1
 RUN apk add --no-cache openssh-server=$OPENSSH_SERVER_PACKAGE_VERSION
 
 ENV SSHD_HOST_KEYS_DIR /etc/ssh/host_keys
