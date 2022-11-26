@@ -11,6 +11,10 @@ MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@op
 
 PermitRootLogin no
 PubkeyAuthentication yes
+# > RSA: The length of the modulus n shall be 2048 bits or more to meet the
+# > minimum security-strength requirement of 112 bits [...]
+# https://csrc.nist.gov/publications/detail/sp/800-131a/rev-2/final
+RequiredRSASize 2048
 PasswordAuthentication no
 StrictModes no
 # separated by spaces
