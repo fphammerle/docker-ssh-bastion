@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.18.0
+FROM docker.io/alpine:3.18.2
 
 ARG OPENSSH_SERVER_PACKAGE_VERSION=9.3_p1-r3
 RUN apk add --no-cache openssh-server=$OPENSSH_SERVER_PACKAGE_VERSION
