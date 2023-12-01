@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.18.4
+FROM docker.io/alpine:3.18.5
 
 # https://www.openssh.com/releasenotes.html
 # https://git.alpinelinux.org/aports/log/main/openssh?h=3.18-stable
